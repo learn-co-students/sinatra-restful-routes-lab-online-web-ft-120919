@@ -16,7 +16,7 @@ get '/recipes/new' do
 end
  
 post '/recipes' do
-  @recipe = Recipe.create(:name => params[:name], :ingredient => params[:ingredients], :cook_time => params[:cook_time])
+  @recipe = Recipe.create(:name => params[:name], :ingredients => params[:ingredients], :cook_time => params[:cook_time])
   redirect to "/recipes/#{@recipe.id}"
 end
 
@@ -40,10 +40,10 @@ patch '/recipes/:id' do #edit action
   @recipe.save
   redirect to "/recipes/#{@recipe.id}"
 end
-# delete '//:id' do #delete action
-#   @article = Article.find_by_id(params[:id])
-#   @article.delete
-#   redirect to '/articles'
-# end
+delete '/recipes/:id' do
+  @recipe = Recipe.find_by_id(params[:id])
+  @recipe.delete
+  redirect to '/recipes'
+end
 
 end
