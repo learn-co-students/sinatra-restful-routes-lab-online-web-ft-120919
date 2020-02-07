@@ -8,7 +8,7 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
   
-  get '/new' do
+  get '/recipes/new' do
     erb :new
   end
 
@@ -29,10 +29,12 @@ class ApplicationController < Sinatra::Base
   
   patch '/recipes/:id' do
     recipe = Recipe.all.find_by_id(params[:id])
+    recipe.update(name: params[:name], ingredients: params[:ingredients], cook_time: params[:cook_time])
     redirect "/recipes/#{recipe.id}"
   end
   
   delete '/recipes/:id' do
+    Recipe.find_by_id(params[:id]).destroy
     redirect '/recipes'
   end
 
