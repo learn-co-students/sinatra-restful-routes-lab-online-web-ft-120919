@@ -14,48 +14,46 @@ class ApplicationController < Sinatra::Base
 
     erb :index	 
   end	
-
+  
   get '/recipes/new' do
     erb :new
   end
-
-  post '/recipes' do
-    Recipe.new(
-      name: params[:name],
-      ingredients: params[:ingredients],
-      cook_time: params[:cook_time]
-    ).tap do |recipe|
-      recipe.save
-      redirect "/recipes/#{recipe.id}"
-    end
+  
+  post '/recipes/new' do
+    @recipe = Recipe.new(params[:recipes])
+    @recipe.save
+    redirect "/recipes/#{@recipe.id}"
   end
-
+  
   get '/recipes/:id' do
-    @recipe = Recipe.find_by(params[:id])
+    @recipe = Recipe.find_by_id(params[:id])
     erb :show
   end
-
+  
   get '/recipes/:id/edit' do
-    @recipe = Recipe.find_by(params[:id])
+    
+    # binding.pry
+    @recipe = Recipe.find_by_id(params[:id])
     erb :edit
   end
-
+  
   patch '/recipes/:id' do
-    Recipe.find_by(params[:id]).tap do |recipe|
+    recipe = Recipe.find_by_id(params[:id]).tap do |recipe|
       recipe.update(
         name: params[:name],
         ingredients: params[:ingredients],
         cook_time: params[:cook_time]
-      )
-
-      redirect "/recipes/#{recipe.id}"
-
+        )
+        
+        redirect "/recipes/#{@recipe.id}"
+        
+      end
     end
-  end
-
-  delete '/recipes/:id/delete' do
-    binding.pry
-    Recipe.find_by(params[:id]).destroy
+    
+    delete '/recipes/:id' do
+     
+      @recipes = Recipe.find_by(params[:id])
+      @recipes.destroy
       redirect '/recipes'
     end
   
