@@ -2,10 +2,11 @@
 <%= @recipe.ingredients %>	<p>Ingredients: <%= @recipe.ingredients %></p>
 <%= @recipe.cook_time %>	<p>Cook Time: <%= @recipe.cook_time %> minutes</p>
 
-<br>
 	<form action="/recipes/<%= @recipe.id %>" method="POST">
+    <input type="hidden" name="_method" value="patch">
+
 		<label>Name: </label><input type="text" value="<%= @recipe.name %>" name="name">
 		<label>Ingredients: </label><input type="text" name="ingredients" value="<%= @recipe.ingredients %>">
 		<label>Cook Time: </label><input type="text" name="cook_time" value="<%= @recipe.cook_time %>">
 		<input type="submit" value="submit">
-        </form>
+    </form>
