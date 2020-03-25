@@ -1,7 +1,12 @@
 class ApplicationController < Sinatra::Base
-  configure do
+configure do
     set :public_folder, 'public'
     set :views, 'app/views'
+end
+
+get '/recipes' do
+    @recipes = Recipe.all
+    erb :index
   end
   
 get '/recipes/new' do
@@ -12,6 +17,8 @@ post '/recipes' do
   @recipe = Recipe.create(:name => params[:name], :ingredients => params[:ingredients], :cook_time => params[:cook_time])
   redirect to "/recipes/#{@recipe.id}"
 end
+
+ 
 
 get '/recipes/:id' do
   @recipe = Recipe.find_by_id(params[:id])
@@ -24,12 +31,12 @@ get '/recipes/:id/edit' do  #load edit form
 end
 
 patch '/recipes/:id' do #edit action
-  @recipes = Article.find_by_id(params[:id])
-  @recipes.name = params[:name]
-  @recipes.ingredients = params[:ingredients]
-  @recipes.cook_time - params[:cook_time]
-  @article.save
-  redirect to "/articles/#{@recipe.id}"
+  @recipe = Article.find_by_id(params[:id])
+  @recipe.name = params[:name]
+  @recipe.ingredients = params[:ingredients]
+  @recipe.cook_time - params[:cook_time]
+  @recipe.save
+  redirect to "/recipes/#{@recipe.id}"
 end
 
 delete '/recipes/:id' do #delete action

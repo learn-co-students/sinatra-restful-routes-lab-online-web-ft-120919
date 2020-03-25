@@ -3,7 +3,7 @@
   <body>
     <h1>Recipes!</h1>
    <% @recipes.each do |p|  %>
-   <a href="/recipes/#{p.id}">Recipe Name: <%= p.name %></a><br>
+   <a href="/recipes/<%= p.id %>">Name: <%= p.name %></a><br>
    Ingredients: <%= p.ingredients %><br>
    Cook Time: <%= p.cook_time %><br>
    <% end %>
